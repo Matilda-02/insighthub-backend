@@ -89,22 +89,30 @@ app.post("/login", async (req, res) => {
 
 app.get("/create-research-table", async (req, res) => {
   try {
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS research (
-        id SERIAL PRIMARY KEY,
-        title VARCHAR(200),
-        abstract TEXT,
-        department VARCHAR(100),
-        year VARCHAR(10),
-        file_url TEXT,
-        user_id INTEGER REFERENCES users(id),
-        status VARCHAR(20) DEFAULT 'pending',
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      )
-    `);
-    res.send("Research table created");
+    await pool.query(`CREATE TABLE IF NOT EXISTS users (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(100),
+      email VARCHAR(100) UNIQUE,
+      password TEXT,
+      role VARCHAR(20) DEFAULT 'user'
+    )`);
+
+    await pool.query(`CREATE TABLE IF NOT EXISTS research (
+      id SERIAL PRIMARY KEY,
+      title VARCHAR(200),
+      abstract TEXT,
+      department VARCHAR(100),
+      year VARCHAR(10),
+      file_url TEXT,
+      user_id INTEGER REFERENCES users(id),
+      status VARCHAR(20) DEFAULT 'pending',
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )`);
+
+    res.send("Tables created successfully");
   } catch (err) {
-    res.status(500).send("Error creating table");
+    console.error("TABLE ERROR:", err);
+    res.status(500).send(err.message);
   }
 });
 
