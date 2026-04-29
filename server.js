@@ -237,6 +237,28 @@ app.delete("/delete-research/:id", async (req, res) => {
   }
 });
 
+app.post("/set-admin", async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const result = await pool.query(
+      "UPDATE users SET role = 'admin' WHERE email = $1 RETURNING *",
+      [email]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({
+      message: "Admin updated successfully",
+      user: result.rows[0]
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
