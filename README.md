@@ -4,13 +4,15 @@ Overview
 A platform for students to upload, view, and manage academic research and capstone projects with role-based access control.
 
 Features
-- User authentication (login/register)
-- Role-based access (Admin/User)
-- Upload research papers
-- Approve/Delete research (Admin only)
-- Search and filter functionality
-- CRUD operations
-- Secure backend API
+User authentication (login/register)
+Role-based access (Admin/User)
+Upload research papers
+Approve/Delete research (Admin only)
+Search and filter functionality
+CRUD operations
+Secure backend API
+Bookmarking system
+Contact author feature
 
 Deployment Links
 - Frontend: https://matilda-02.github.io/insighthub-frontend/
